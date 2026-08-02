@@ -55,7 +55,6 @@
   let buildingGlyphDraft = $state(false);
   let glyphDraftReady = $state(false);
   let glyphHasDraftChanges = $state(false);
-  let glyphDraftFontUrl: string | null = null;
   let glyphDraftFontFace: FontFace | null = null;
   let glyphDraftRequest = 0;
   let glyphBaselineScaleX = $state(1);
@@ -89,7 +88,6 @@
   let previewSize = $state(54);
   let previewWarnings = $state<string[]>([]);
   let builtFontFiles = $state<{ ttf?: string; woff2?: string }>({});
-  let previewFontUrl: string | null = null;
   let previewFontFace: FontFace | null = null;
   let spacingGlyphId = $state('');
   let spacingGlyphSearch = $state('');
@@ -299,9 +297,7 @@
       const bytes = await readProjectBinary(projectPath, woff2);
       const buffer = new ArrayBuffer(bytes.byteLength);
       new Uint8Array(buffer).set(bytes);
-      if (glyphDraftFontUrl) URL.revokeObjectURL(glyphDraftFontUrl);
-      glyphDraftFontUrl = URL.createObjectURL(new Blob([buffer], { type: 'font/woff2' }));
-      const face = new FontFace('HandfontDraftPreview', `url(${glyphDraftFontUrl})`);
+      const face = new FontFace('HandfontDraftPreview', buffer);
       await face.load();
       if (glyphDraftFontFace) document.fonts.delete(glyphDraftFontFace);
       document.fonts.add(face);
@@ -527,11 +523,9 @@
       if (!woff2) throw new Error('The compiler did not produce a WOFF2 preview font');
       builtFontFiles = { ttf, woff2 };
       const bytes = await readProjectBinary(projectPath, woff2);
-      if (previewFontUrl) URL.revokeObjectURL(previewFontUrl);
       const fontBuffer = new ArrayBuffer(bytes.byteLength);
       new Uint8Array(fontBuffer).set(bytes);
-      previewFontUrl = URL.createObjectURL(new Blob([fontBuffer], { type: 'font/woff2' }));
-      const face = new FontFace('HandfontPreview', `url(${previewFontUrl})`);
+      const face = new FontFace('HandfontPreview', fontBuffer);
       await face.load();
       if (previewFontFace) document.fonts.delete(previewFontFace);
       document.fonts.add(face);

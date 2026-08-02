@@ -2,6 +2,12 @@ use serde_json::Value;
 use std::{fs, io::Write, path::PathBuf, process::{Command, Stdio}};
 use tauri::Manager;
 
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
+
 const PROJECT_DIRECTORIES: [&str; 7] = ["sources/templates", "sources/glyphs/regular", "vectors/regular", "templates", "previews", "generated/regular", "validation"];
 
 fn project_file(root: &str) -> Result<PathBuf, String> {
@@ -67,6 +73,8 @@ fn run_compiler_blocking(app: tauri::AppHandle, request: Value) -> Result<Value,
     let (program, arguments, working_directory) = compiler_command(&app)?;
     let mut command = Command::new(program);
     command.args(arguments);
+    #[cfg(windows)]
+    command.creation_flags(CREATE_NO_WINDOW);
     if let Some(directory) = working_directory { command.current_dir(directory); }
     let mut child = command
         .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped())

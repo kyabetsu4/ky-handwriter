@@ -1,6 +1,6 @@
 # ky.handwriter
 
-ky.handwriter is a local-first Windows desktop app that turns handwriting into a usable OpenType font. It guides a font from printable handwriting sheets through image extraction, glyph refinement, spacing, kerning, preview, and export—without accounts, uploads, or remote services.
+ky.handwriter is a local-first Windows desktop app that turns handwriting into a usable OpenType font. It guides a font from printable handwriting sheets through image extraction, glyph refinement, spacing, kerning, preview, and export.
 
 ## What it does
 
