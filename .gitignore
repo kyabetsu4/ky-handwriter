@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.vite/
+src-tauri/target/
+*.log
+.DS_Store
+compiler/.venv/
+compiler/__pycache__/
+*.pyc
+
