@@ -1,5 +1,6 @@
 use serde_json::Value;
 use std::{fs, io::Write, path::PathBuf, process::{Command, Stdio}};
+use tauri::Manager;
 
 const PROJECT_DIRECTORIES: [&str; 7] = ["sources/templates", "sources/glyphs/regular", "vectors/regular", "templates", "previews", "generated/regular", "validation"];
 
@@ -43,13 +44,31 @@ fn load_project(path: String) -> Result<Value, String> {
     Ok(project)
 }
 
-fn run_compiler_blocking(request: Value) -> Result<Value, String> {
+fn compiler_command(app: &tauri::AppHandle) -> Result<(PathBuf, Vec<String>, Option<PathBuf>), String> {
+    let executable_name = if cfg!(windows) { "handfont-compiler.exe" } else { "handfont-compiler" };
+    let resource_compiler = app.path().resource_dir().map_err(|error| error.to_string())?
+        .join("compiler").join(executable_name);
+    if resource_compiler.is_file() { return Ok((resource_compiler, Vec::new(), None)); }
+
+    let portable_compiler = std::env::current_exe().map_err(|error| error.to_string())?
+        .parent().ok_or("Could not resolve the application folder")?
+        .join("compiler").join(executable_name);
+    if portable_compiler.is_file() { return Ok((portable_compiler, Vec::new(), None)); }
+
     let compiler_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("compiler");
     let python = compiler_root.join(".venv").join("Scripts").join("python.exe");
-    if !python.is_file() { return Err("The local compiler environment is not installed".into()); }
-    let mut child = Command::new(python)
-        .args(["-m", "handfont_compiler"])
-        .current_dir(compiler_root)
+    if python.is_file() {
+        return Ok((python, vec!["-m".into(), "handfont_compiler".into()], Some(compiler_root)));
+    }
+    Err("The bundled font compiler could not be found. Reinstall the app or use the complete portable folder.".into())
+}
+
+fn run_compiler_blocking(app: tauri::AppHandle, request: Value) -> Result<Value, String> {
+    let (program, arguments, working_directory) = compiler_command(&app)?;
+    let mut command = Command::new(program);
+    command.args(arguments);
+    if let Some(directory) = working_directory { command.current_dir(directory); }
+    let mut child = command
         .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped())
         .spawn().map_err(|e| format!("Could not start the local compiler: {e}"))?;
     let input = serde_json::to_vec(&request).map_err(|e| e.to_string())?;
@@ -63,8 +82,8 @@ fn run_compiler_blocking(request: Value) -> Result<Value, String> {
 }
 
 #[tauri::command]
-async fn run_compiler(request: Value) -> Result<Value, String> {
-    tauri::async_runtime::spawn_blocking(move || run_compiler_blocking(request))
+async fn run_compiler(app: tauri::AppHandle, request: Value) -> Result<Value, String> {
+    tauri::async_runtime::spawn_blocking(move || run_compiler_blocking(app, request))
         .await
         .map_err(|error| format!("The compiler worker stopped unexpectedly: {error}"))?
 }
