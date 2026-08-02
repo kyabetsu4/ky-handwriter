@@ -2,6 +2,12 @@
 
 ky.handwriter is a local-first Windows desktop app that turns handwriting into a usable OpenType font. It guides a font from printable handwriting sheets through image extraction, glyph refinement, spacing, kerning, preview, and export.
 
+## About
+
+ky.handwriter makes personal font creation approachable without requiring specialist font-design software. It provides one guided desktop workflow for generating handwriting sheets, importing completed pages, refining glyphs, adjusting spacing and kerning, previewing the result, and exporting fonts for desktop and web use.
+
+Projects remain editable and portable because their source images, settings, traced outlines, and generated files are stored together in a regular local folder. The application is built with Svelte, Tauri, Rust, Python, OpenCV, and the FontTools ecosystem.
+
 ## Screenshots
 
 ### Font preview and alternate forms
@@ -127,3 +133,7 @@ The installer and portable archive include the frozen compiler, so end users do 
 ## Privacy
 
 Everything runs locally. ky.handwriter has no accounts, remote APIs, analytics, project uploads, or cloud dependency.
+
+## License
+
+ky.handwriter is available under the [MIT License](LICENSE).

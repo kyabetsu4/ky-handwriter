@@ -1,6 +1,6 @@
 [package]
 name = "handfont"
-version = "0.9.0"
+version = "0.9.1"
 description = "A local handwriting font builder"
 authors = ["Handfont contributors"]
 edition = "2021"

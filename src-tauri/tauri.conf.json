@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "ky.handwriter",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "identifier": "ky.handwriter",
   "build": {
     "beforeDevCommand": "npm run dev",
