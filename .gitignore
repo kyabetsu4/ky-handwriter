@@ -5,6 +5,9 @@ src-tauri/target/
 *.log
 .DS_Store
 compiler/.venv/
+compiler/build/
+compiler/dist/
 compiler/__pycache__/
+src-tauri/target/release/portable/
+src-tauri/target/release/ky.handwriter_*-portable.zip
 *.pyc
-
