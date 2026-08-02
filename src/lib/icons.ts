@@ -1,0 +1,15 @@
+export const icons: Record<string, string> = {
+  home: '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10M9 20v-6h6v6"/>',
+  project: '<path d="M4 5h6l2 2h8v12H4z"/>',
+  template: '<path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h2m2 0h2M9 15h2m2 0h2"/>',
+  glyphs: '<path d="m5 19 6.2-14h1.6L19 19M7.3 14h9.4"/>',
+  spacing: '<path d="M4 6v12M20 6v12M8 12h8m-2-2 2 2-2 2m-4 0-2-2 2-2"/>',
+  kerning: '<path d="m3 19 5-14 5 14M5 14h6m2-9 4 7 4-7m-4 7v7"/>',
+  preview: '<circle cx="12" cy="12" r="3"/><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6"/>',
+  export: '<path d="M12 3v12m-4-4 4 4 4-4"/><path d="M5 15v5h14v-5"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  folder: '<path d="M3 6h7l2 2h9v10H3z"/>',
+  arrow: '<path d="m9 18 6-6-6-6"/>',
+  spark: '<path d="m12 3 1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z"/>',
+  search: '<circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/>',
+};

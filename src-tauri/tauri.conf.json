@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "ky.handwriter",
+  "version": "0.9.1",
+  "identifier": "ky.handwriter",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build && npm run compiler:bundle",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [{ "title": "ky.handwriter", "width": 1200, "height": 780, "minWidth": 960, "minHeight": 680, "resizable": true }],
+    "security": { "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' asset: data: blob:; connect-src ipc: http://ipc.localhost" }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ],
+    "resources": {
+      "../compiler/dist/handfont-compiler.exe": "compiler/handfont-compiler.exe"
+    }
+  }
+}
