@@ -2,6 +2,14 @@
 
 ky.handwriter is a local-first Windows desktop app that turns handwriting into a usable OpenType font. It guides a font from printable handwriting sheets through image extraction, glyph refinement, spacing, kerning, preview, and export.
 
+## Download for Windows
+
+**[Download the Windows installer (.exe)](https://github.com/kyabetsu4/ky-handwriter/releases/download/v0.9.1/ky.handwriter_0.9.1_x64-setup.exe)**
+
+Download the file, open it, and follow the setup instructions. If you prefer an app that does not need to be installed, download the **[portable Windows version (.zip)](https://github.com/kyabetsu4/ky-handwriter/releases/download/v0.9.1/ky.handwriter_0.9.1_x64-portable.zip)**, extract the entire folder, and run `ky.handwriter.exe` from inside it.
+
+You can also [view all available downloads and releases](https://github.com/kyabetsu4/ky-handwriter/releases/latest).
+
 ## About
 
 ky.handwriter makes personal font creation approachable without requiring specialist font-design software. It provides one guided desktop workflow for generating handwriting sheets, importing completed pages, refining glyphs, adjusting spacing and kerning, previewing the result, and exporting fonts for desktop and web use.
